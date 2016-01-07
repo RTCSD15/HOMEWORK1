@@ -1,0 +1,128 @@
+#include<iostream>
+#include<stdlib.h>
+#include<Eigen/Dense>
+#include<math.h>
+using namespace std;
+using Eigen::MatrixXd;
+MatrixXd exchange(char str[])
+{MatrixXd p(1,2);
+int i,j,k;
+char a[10]; 
+for(i=0;i<=20&&str[i]!='(';i++);//找到字符转换启示位置 
+for(j=0;j<=20&&str[j]!=',';j++);//找到字符转换的终止位置 
+for(k=0;k<=10&&i<j;k++){
+i++;
+a[k]=str[i]; // 字符转换 
+}
+p(0,0)=atof(a);
+i=i+1;
+for(;j<=20&&str[j]!=')';j++);//第二段字符转换 
+for(k=0;k<=10&&i<j;k++){
+i++;
+a[k]=str[i];
+}
+p(0,1)=atof(a);
+return p; 
+}
+int main()
+{
+char name[10];
+int n;
+double deg;
+const float Pi=3.1415927;
+char str1[20];
+char str2[20];
+char str3[20];
+char str4[20];
+char str5[20];
+char str6[20];
+MatrixXd r(2,2);
+MatrixXd p1(1,2);
+MatrixXd p2(1,2);
+MatrixXd p3(1,2);
+MatrixXd p4(1,2);
+cout<<"请输入类型";
+cin>>name;
+cin>>n;
+switch(n)
+{
+case 1:
+cin>>str1;
+p1=exchange(str1);
+break;
+case 2:
+cin>>str1;
+p1=exchange(str1);
+cin>>str2;
+p2=exchange(str2);
+break;
+case 3:
+cin>>str1;
+p1=exchange(str1);
+cin>>str2;
+p2=exchange(str2);
+cin>>str3;
+p3=exchange(str3);
+break;
+default:cout<<"输入错误";	
+}
+cout<<"请输入变换"<<endl;
+cin>>str4;
+if(str4[0]=='m'&&str4[1]=='o'&&str4[2]=='v'&&str4[3]=='e'&&str4[4]==0)
+{
+cin>>str5;
+cin>>str6;
+p4=exchange(str6);
+if(n==1)
+{
+p1=p1+p4;
+cout<<"("<<p1<<")"<<endl;
+}
+else if(n==2)
+{
+p1=p1+p4; 
+p2=p2+p4;
+cout<<"("<<p1<<")"<<"("<<p2<<")"<<endl;
+}
+else
+{
+p1=p1+p4; 
+p2=p2+p4;
+p3=p3+p4;
+cout<<"("<<p1<<")"<<"("<<p2<<")"<<"("<<p3<<")"<<endl;
+}
+}
+else if(str4[0]=='r'&&str4[1]=='0'&&str4[2]=='t'&&str4[3]=='a'&&str4[4]=='t'&&str4[5]=='e'&&str4[6]==0)
+{
+cin>>str5;
+cin>>deg;
+r(0,0)=cos(deg*Pi/180);
+r(0,1)=sin(deg*Pi/180);
+r(1,0)=-sin(deg*Pi/180);
+r(1,1)=cos(deg*Pi/180);
+if(n==1)
+{
+p1=p1*r;
+cout<<"("<<p1<<")"<<endl;
+}
+else if(n==2)
+{
+p1=p1*r;
+p2=p2*r;
+cout<<"("<<p1<<")"<<"("<<p2<<")"<<endl;
+}
+else
+{
+p1=p1*r;
+p2=p2*r;
+p3=p3*r;
+cout<<"("<<p1<<")"<<"("<<p2<<")"<<"("<<p3<<")"<<endl;
+}
+
+
+}
+else 
+{cout<<"输出错误"<<endl;
+}
+return 0;
+}
